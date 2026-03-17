@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Budha Library — Illuminating Minds Since 1998</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #F5E6C0;
+    --deep: #0A0F1E;
+    --navy: #0D1530;
+    --navy2: #111D3C;
+    --glass-bg: rgba(255,255,255,0.05);
+    --glass-border: rgba(201,168,76,0.25);
+    --glass-hover: rgba(255,255,255,0.09);
+    --text-primary: #F0EAD6;
+    --text-muted: #A89B7A;
+  }
+ 
+  * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+ 
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--deep);
+    color: var(--text-primary);
+    overflow-x: hidden;
+  }
+ 
+  /* ── BACKGROUND ORBS ── */
+  .bg-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .orb {
+    position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.18;
+    animation: floatOrb 18s ease-in-out infinite alternate;
+  }
+  .orb1 { width:600px; height:600px; background:radial-gradient(circle, #3A5FBF, transparent); top:-100px; left:-200px; animation-duration:20s; }
+  .orb2 { width:500px; height:500px; background:radial-gradient(circle, #C9A84C, transparent); top:40%; right:-150px; animation-duration:14s; }
+  .orb3 { width:400px; height:400px; background:radial-gradient(circle, #1A3A6E, transparent); bottom:5%; left:30%; animation-duration:17s; }
+  .orb4 { width:300px; height:300px; background:radial-gradient(circle, #7B4FBF, transparent); top:20%; left:50%; animation-duration:22s; }
+ 
+  @keyframes floatOrb {
+    from { transform: translateY(0) scale(1); }
+    to   { transform: translateY(-60px) scale(1.12); }
+  }
+ 
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content:''; position:fixed; inset:0; z-index:1; pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+ 
+  /* ── GLASSMORPHISM CARD ── */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+    transition: all 0.35s ease;
+  }
+  .glass:hover {
+    background: var(--glass-hover);
+    border-color: rgba(201,168,76,0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.15);
+  }
+  .glass-flat {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 20px;
+  }
+ 
+  /* ── TYPOGRAPHY ── */
+  .font-display { font-family: 'Cinzel', serif; }
+  .font-serif   { font-family: 'Cormorant Garamond', serif; }
+ 
+  .gold-text {
+    background: linear-gradient(135deg, #C9A84C 0%, #F5E6C0 50%, #C9A84C 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+ 
+  /* ── GOLD BUTTON ── */
+  .btn-gold {
+    background: linear-gradient(135deg, #C9A84C, #E8C97A, #C9A84C);
+    color: #0A0F1E;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .btn-gold::before {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+  .btn-gold:hover::before { transform: translateX(100%); }
+  .btn-gold:hover { box-shadow: 0 8px 32px rgba(201,168,76,0.5); transform: translateY(-2px); }
+ 
+  .btn-outline {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-outline:hover {
+    background: rgba(201,168,76,0.1);
+    box-shadow: 0 0 20px rgba(201,168,76,0.2);
+  }
+ 
+  /* ── DIVIDER ── */
+  .gold-divider {
+    display: flex; align-items: center; gap: 16px; margin: 12px 0;
+  }
+  .gold-divider::before, .gold-divider::after {
+    content:''; flex:1; height:1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+ 
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+ 
+  /* ── NAV ── */
+  #navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 16px 40px;
+    transition: all 0.4s ease;
+  }
+  #navbar.scrolled {
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 12px 40px;
+  }
+  .nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: rgba(240,234,214,0.75);
+    text-decoration: none;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-link::after {
+    content:''; position:absolute; bottom:-4px; left:0; right:0; height:1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  .nav-link:hover { color: var(--gold-light); }
+  .nav-link:hover::after { transform: scaleX(1); }
+ 
+  /* ── MOBILE MENU ── */
+  #mobile-menu {
+    display: none; position: fixed; inset: 0; z-index: 999;
+    background: rgba(10,15,30,0.97);
+    backdrop-filter: blur(30px);
+    flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+  }
+  #mobile-menu.open { display: flex; }
+  .mobile-nav-link {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .mobile-nav-link:hover { color: var(--gold); }
+ 
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh; position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
+    padding: 100px 24px 80px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 16px;
+    background: rgba(201,168,76,0.1);
+    border: 1px solid rgba(201,168,76,0.35);
+    border-radius: 100px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 600;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+  }
+  .hero-stats {
+    display: flex; gap: 40px; flex-wrap: wrap; margin-top: 60px;
+  }
+  .hero-stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .hero-stat-label {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+ 
+  /* ── SCROLL INDICATOR ── */
+  .scroll-indicator {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(-10px); }
+  }
+ 
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 2; }
+  .section-pad { padding: 100px 24px; }
+  .max-w { max-width: 1200px; margin: 0 auto; }
+ 
+  /* ── ABOUT ── */
+  .about-img-frame {
+    border-radius: 24px; overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .about-img-frame::after {
+    content:''; position:absolute; inset:0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .about-value-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 20px 0; border-bottom: 1px solid rgba(201,168,76,0.12);
+  }
+  .about-value-icon {
+    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1rem;
+  }
+ 
+  /* ── SERVICES ── */
+  .service-card {
+    padding: 36px 28px;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 60px; height: 60px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; color: var(--gold); margin-bottom: 20px;
+  }
+ 
+  /* ── BATCHES ── */
+  .batch-card { padding: 32px; position: relative; overflow: hidden; }
+  .batch-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 100px;
+    font-size: 0.65rem; font-family: 'Cinzel', serif; letter-spacing: 0.15em;
+    background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold); margin-bottom: 16px;
+  }
+  .batch-badge.popular {
+    background: linear-gradient(135deg, #C9A84C, #E8C97A);
+    color: #0A0F1E; border: none;
+  }
+  .batch-price {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem; font-weight: 700;
+    background: linear-gradient(135deg, #C9A84C, #F5E6C0);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .batch-feature {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; font-size: 0.88rem; color: rgba(240,234,214,0.8);
+    border-bottom: 1px solid rgba(201,168,76,0.08);
+  }
+  .batch-feature i { color: var(--gold); font-size: 0.7rem; }
+ 
+  /* ── PAYMENT ── */
+  .payment-method {
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .payment-method:hover {
+    background: rgba(201,168,76,0.05);
+  }
+  .payment-radio {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s; flex-shrink: 0;
+  }
+  .payment-radio.selected { border-color: var(--gold); }
+  .payment-radio.selected::after {
+    content:''; width:10px; height:10px; border-radius:50%;
+    background: var(--gold); display: block;
+  }
+  .form-input {
+    width: 100%; padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 12px; color: var(--text-primary);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    transition: all 0.3s; outline: none;
+  }
+  .form-input:focus {
+    border-color: var(--gold); background: rgba(201,168,76,0.05);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+  }
+  .form-input::placeholder { color: rgba(168,155,122,0.5); }
+  .form-label {
+    font-size: 0.78rem; letter-spacing: 0.08em;
+    color: var(--text-muted); margin-bottom: 8px; display: block;
+    font-family: 'Cinzel', serif;
+  }
+ 
+  /* ── CATALOG ── */
+  .book-card { padding: 20px; position: relative; overflow: hidden; }
+  .book-cover {
+    width: 100%; aspect-ratio: 2/3; border-radius: 12px; overflow: hidden;
+    margin-bottom: 16px; position: relative;
+    background: linear-gradient(135deg, #1A2A4E, #0D1530);
+  }
+  .book-cover-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 8px;
+    font-family: 'Cinzel', serif; text-align: center; padding: 16px;
+  }
+  .book-genre {
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    color: var(--gold); font-family: 'Cinzel', serif;
+    background: rgba(201,168,76,0.1); padding: 3px 10px; border-radius: 20px;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+  .book-spine {
+    position: absolute; left: 0; top: 0; bottom: 0; width: 8px;
+    background: linear-gradient(180deg, #C9A84C, #7A5E1E);
+    border-radius: 12px 0 0 12px;
+  }
+ 
+  /* ── EVENTS ── */
+  .event-card { padding: 28px; display: flex; gap: 20px; }
+  .event-date-box {
+    flex-shrink: 0; width: 64px; text-align: center;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 14px; padding: 12px 8px;
+  }
+  .event-day {
+    font-family: 'Cinzel', serif; font-size: 1.6rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+  }
+  .event-month {
+    font-family: 'Cinzel', serif; font-size: 0.6rem;
+    letter-spacing: 0.15em; color: var(--text-muted); margin-top: 4px;
+  }
+ 
+  /* ── TESTIMONIALS ── */
+  .testimonial-card { padding: 36px 32px; }
+  .star-row { display: flex; gap: 4px; margin-bottom: 16px; }
+  .star-row i { color: var(--gold); font-size: 0.85rem; }
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; line-height: 0.5;
+    color: rgba(201,168,76,0.2); font-style: italic; margin-bottom: 8px;
+  }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: rgba(240,234,214,0.85); line-height: 1.7; margin-bottom: 24px;
+  }
+  .avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), #7A5E1E);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif; font-size: 1rem; color: #0A0F1E; font-weight: 700;
+    flex-shrink: 0;
+  }
+ 
+  /* ── CONTACT ── */
+  .contact-info-item {
+    display: flex; align-items: flex-start; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+  .contact-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+    background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 0.9rem;
+  }
+ 
+  /* ── MAP PLACEHOLDER ── */
+  .map-placeholder {
+    border-radius: 20px; overflow: hidden;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--glass-border);
+    height: 300px; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px; color: var(--text-muted);
+    font-family: 'Cinzel', serif; letter-spacing: 0.1em; font-size: 0.85rem;
+    position: relative; overflow: hidden;
+  }
+  .map-placeholder::before {
+    content:''; position:absolute; inset:0;
+    background: 
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(201,168,76,0.06) 39px, rgba(201,168,76,0.06) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(201,168,76,0.06) 39px, rgba(201,168,76,0.06) 40px);
+  }
+ 
+  /* ── FOOTER ── */
+  footer {
+    position: relative; z-index: 2;
+    border-top: 1px solid rgba(201,168,76,0.15);
+    padding: 64px 24px 32px;
+  }
+  .footer-link {
+    color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+    transition: color 0.3s; display: block; margin-bottom: 10px;
+  }
+  .footer-link:hover { color: var(--gold); }
+  .social-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.9rem;
+    cursor: pointer; transition: all 0.3s;
+    text-decoration: none;
+  }
+  .social-btn:hover {
+    background: rgba(201,168,76,0.12); color: var(--gold);
+    border-color: rgba(201,168,76,0.4);
+  }
+ 
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInUp {
+    from { opacity:0; transform: translateY(40px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+  .animate-up { opacity:0; animation: fadeInUp 0.8s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+ 
+  /* ── NOTIFICATION TOAST ── */
+  #toast {
+    position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+    padding: 16px 24px;
+    background: rgba(10,15,30,0.9);
+    border: 1px solid rgba(201,168,76,0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 14px; color: var(--text-primary);
+    font-size: 0.88rem; display: flex; align-items: center; gap: 12px;
+    transform: translateY(100px); opacity:0;
+    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    max-width: 320px;
+  }
+  #toast.show { transform: translateY(0); opacity:1; }
+  #toast i { color: var(--gold); }
+ 
+  /* ── CATALOG FILTER ── */
+  .filter-btn {
+    padding: 8px 20px; border-radius: 100px;
+    font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.12em;
+    border: 1px solid rgba(201,168,76,0.25); background: transparent;
+    color: var(--text-muted); cursor: pointer; transition: all 0.3s;
+  }
+  .filter-btn.active, .filter-btn:hover {
+    background: rgba(201,168,76,0.12); color: var(--gold);
+    border-color: rgba(201,168,76,0.5);
+  }
+ 
+  /* ── MEMBERSHIP PROGRESS ── */
+  .progress-bar {
+    height: 4px; border-radius: 100px;
+    background: rgba(255,255,255,0.08); overflow: hidden; margin: 8px 0 4px;
+  }
+  .progress-fill {
+    height: 100%; border-radius: 100px;
+    background: linear-gradient(90deg, #C9A84C, #F5E6C0);
+    transition: width 1.5s ease;
+  }
+ 
+  /* Responsive */
+  @media (max-width: 768px) {
+    .section-pad { padding: 72px 20px; }
+    #navbar { padding: 14px 20px; }
+    .hero-stats { gap: 24px; }
+    .event-card { flex-direction: column; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+ 
+<!-- BACKGROUND -->
+<div class="bg-canvas">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="orb orb4"></div>
+</div>
+ 
+<!-- TOAST -->
+<div id="toast"><i class="fas fa-check-circle"></i><span id="toast-msg">Action successful</span></div>
+ 
+<!-- MOBILE MENU -->
+<div id="mobile-menu">
+  <button onclick="closeMobile()" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer;">
+    <i class="fas fa-times"></i>
+  </button>
+  <a href="#hero"         class="mobile-nav-link" onclick="closeMobile()">Home</a>
+  <a href="#about"        class="mobile-nav-link" onclick="closeMobile()">About</a>
+  <a href="#services"     class="mobile-nav-link" onclick="closeMobile()">Services</a>
+  <a href="#batches"      class="mobile-nav-link" onclick="closeMobile()">Batches</a>
+  <a href="#payment"      class="mobile-nav-link" onclick="closeMobile()">Payment</a>
+  <a href="#catalog"      class="mobile-nav-link" onclick="closeMobile()">Catalog</a>
+  <a href="#events"       class="mobile-nav-link" onclick="closeMobile()">Events</a>
+  <a href="#testimonials" class="mobile-nav-link" onclick="closeMobile()">Testimonials</a>
+  <a href="#contact"      class="mobile-nav-link" onclick="closeMobile()">Contact</a>
+</div>
+ 
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="max-w flex items-center justify-between">
+    <a href="#hero" class="flex items-center gap-3 no-underline">
+      <div style="width:36px;height:36px;background:linear-gradient(135deg,#C9A84C,#7A5E1E);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-book-open" style="color:#0A0F1E;font-size:0.9rem;"></i>
+      </div>
+      <span class="font-display text-sm tracking-widest gold-text font-semibold">BUDHA LIBRARY</span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#about"        class="nav-link">About</a>
+      <a href="#services"     class="nav-link">Services</a>
+      <a href="#batches"      class="nav-link">Batches</a>
+      <a href="#payment"      class="nav-link">Payment</a>
+      <a href="#catalog"      class="nav-link">Catalog</a>
+      <a href="#events"       class="nav-link">Events</a>
+      <a href="#contact"      class="nav-link">Contact</a>
+      <a href="#batches" class="btn-gold px-5 py-2 rounded-xl text-xs">Enroll Now</a>
+    </div>
+    <button class="md:hidden" onclick="openMobile()" style="background:none;border:none;color:var(--text-primary);font-size:1.3rem;cursor:pointer;">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+</nav>
+ 
+<!-- ══════════════════════════════════════════
+  HERO
+══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="max-w text-center" style="max-width:900px;">
+    <div class="animate-up delay-1">
+      <span class="hero-badge"><i class="fas fa-star" style="font-size:0.6rem;"></i>Est. 2023 · Sasaram, Bihar</span>
+    </div>
+    <h1 class="hero-title animate-up delay-2">
+      <span class="gold-text">Budha</span><br/>Library
+    </h1>
+    <p class="hero-subtitle mx-auto animate-up delay-3">
+      A sanctuary of knowledge, curated for the discerning learner. Where academic excellence meets the timeless pursuit of wisdom.
+    </p>
+    <div class="flex flex-wrap gap-4 justify-center animate-up delay-4">
+      <a href="#batches" class="btn-gold px-8 py-4 rounded-2xl text-sm">Explore Batches</a>
+      <a href="#catalog" class="btn-outline px-8 py-4 rounded-2xl text-sm">Browse Catalog</a>
+    </div>
+    <div class="hero-stats justify-center animate-up delay-5">
+      <div>
+        <div class="hero-stat-num">12,000+</div>
+        <div class="hero-stat-label">Book Collection</div>
+      </div>
+      <div style="width:1px;background:rgba(201,168,76,0.2);"></div>
+      <div>
+        <div class="hero-stat-num">4,800+</div>
+        <div class="hero-stat-label">Active Members</div>
+      </div>
+      <div style="width:1px;background:rgba(201,168,76,0.2);"></div>
+      <div>
+        <div class="hero-stat-num">26+</div>
+        <div class="hero-stat-label">Years of Legacy</div>
+      </div>
+      <div style="width:1px;background:rgba(201,168,76,0.2);"></div>
+      <div>
+        <div class="hero-stat-num">98%</div>
+        <div class="hero-stat-label">Satisfaction Rate</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator" style="color:var(--text-muted);">
+    <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;">SCROLL</span>
+    <i class="fas fa-chevron-down" style="font-size:0.7rem;"></i>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  ABOUT
+══════════════════════════════════════════ -->
+<section id="about" class="section-pad">
+  <div class="max-w">
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="section-label mb-3">Our Story</p>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold mb-6" style="line-height:1.1;">
+          A Legacy of<br/><span class="gold-text">Intellectual Excellence</span>
+        </h2>
+        <div class="gold-divider"><span class="section-label">Since 2023</span></div>
+        <p class="mt-6 leading-relaxed" style="color:rgba(240,234,214,0.75);font-size:0.95rem;">
+          Budha Library was founded with an unwavering conviction: that access to quality knowledge is the cornerstone of a progressive society. For over two decades, we have served as Patna's most trusted academic institution — providing structured learning environments, curated resources, and mentorship programs that have guided thousands of students toward their aspirations.
+        </p>
+        <p class="mt-4 leading-relaxed" style="color:rgba(240,234,214,0.75);font-size:0.95rem;">
+          Our philosophy transcends the conventional boundaries of a library. We are an ecosystem — where competitive examination preparation, professional skill development, and intellectual curiosity coexist harmoniously.
+        </p>
+        <div class="mt-8 space-y-2">
+          <div class="about-value-item">
+            <div class="about-value-icon"><i class="fas fa-shield-alt"></i></div>
+            <div>
+              <div class="font-semibold text-sm mb-1" style="font-family:'Cinzel',serif;letter-spacing:0.05em;">Academic Integrity</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">We maintain the highest standards of ethical scholarship and honest academic practice.</div>
+            </div>
+          </div>
+          <div class="about-value-item">
+            <div class="about-value-icon"><i class="fas fa-users"></i></div>
+            <div>
+              <div class="font-semibold text-sm mb-1" style="font-family:'Cinzel',serif;letter-spacing:0.05em;">Community-Centred</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">Fostering a collaborative environment where learners inspire and uplift one another.</div>
+            </div>
+          </div>
+          <div class="about-value-item">
+            <div class="about-value-icon"><i class="fas fa-lightbulb"></i></div>
+            <div>
+              <div class="font-semibold text-sm mb-1" style="font-family:'Cinzel',serif;letter-spacing:0.05em;">Continuous Innovation</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);">Embracing modern pedagogical methods while honouring time-tested learning traditions.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="about-img-frame glass-flat" style="padding:24px;">
+          <div style="width:100%;aspect-ratio:4/3;border-radius:16px;background:linear-gradient(135deg,#1A2A4E 0%,#0D1530 60%,#1A2A1A 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;position:relative;overflow:hidden;">
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(201,168,76,0.03) 20px,rgba(201,168,76,0.03) 21px);"></div>
+            <i class="fas fa-book-open" style="font-size:4rem;color:rgba(201,168,76,0.3);position:relative;z-index:1;"></i>
+            <div style="font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:0.15em;color:rgba(201,168,76,0.5);position:relative;z-index:1;">BUDHA LIBRARY</div>
+            <div style="font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(240,234,214,0.3);font-size:0.85rem;position:relative;z-index:1;">Est. 1998 · Patna, Bihar</div>
+            <!-- Decorative elements -->
+            <div style="position:absolute;top:-30px;right:-30px;width:150px;height:150px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.08),transparent);"></div>
+            <div style="position:absolute;bottom:-20px;left:-20px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(59,93,191,0.12),transparent);"></div>
+          </div>
+          <!-- Stats below image -->
+          <div class="grid grid-cols-3 gap-4 mt-6">
+            <div class="text-center p-3" style="border-right:1px solid rgba(201,168,76,0.15);">
+              <div class="font-display text-xl gold-text font-bold">26+</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Years</div>
+            </div>
+            <div class="text-center p-3" style="border-right:1px solid rgba(201,168,76,0.15);">
+              <div class="font-display text-xl gold-text font-bold">48</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Staff</div>
+            </div>
+            <div class="text-center p-3">
+              <div class="font-display text-xl gold-text font-bold">18</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Batches</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  SERVICES
+══════════════════════════════════════════ -->
+<section id="services" class="section-pad" style="background:rgba(255,255,255,0.01);">
+  <div class="max-w">
+    <div class="text-center mb-16">
+      <p class="section-label mb-3">What We Offer</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        Premium <span class="gold-text">Services</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);max-width:520px;margin:0 auto;line-height:1.6;">
+        Comprehensive academic infrastructure designed to empower every learner at every stage of their journey.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Service Cards -->
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-book-reader"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Study Hall Access</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Spacious, air-conditioned reading halls with individual study carrels, high-speed internet, and an environment meticulously optimised for deep focus and concentration.</p>
+      </div>
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Competitive Exam Prep</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Dedicated preparation programmes for UPSC, BPSC, SSC, Banking, Railways, and other competitive examinations, guided by experienced mentors with proven track records.</p>
+      </div>
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Digital Resource Centre</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Access to a curated digital library encompassing e-books, academic journals, video lectures, and mock examination portals available round the clock.</p>
+      </div>
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Expert Mentorship</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Scheduled one-on-one and group mentoring sessions with seasoned educators who provide personalised guidance, study strategies, and performance analytics.</p>
+      </div>
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-file-alt"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Mock Tests & Analysis</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Regularly scheduled mock examinations with detailed performance reports, comparative rankings, and weakness identification to sharpen examination readiness.</p>
+      </div>
+      <div class="glass service-card">
+        <div class="service-icon"><i class="fas fa-moon"></i></div>
+        <h3 class="font-display text-lg font-semibold mb-3" style="letter-spacing:0.04em;">Extended Hours Access</h3>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;">Premium members enjoy access from 5:00 AM to midnight, with secure locker facilities, complimentary refreshments, and uninterrupted 24/7 Wi-Fi connectivity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  BATCHES
+══════════════════════════════════════════ -->
+<section id="batches" class="section-pad">
+  <div class="max-w">
+    <div class="text-center mb-16">
+      <p class="section-label mb-3">Enrolment Plans</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        Choose Your <span class="gold-text">Batch</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);max-width:500px;margin:0 auto;">
+        Structured learning pathways tailored to diverse academic goals and schedules.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Basic -->
+      <div class="glass batch-card">
+        <span class="batch-badge">Foundation</span>
+        <h3 class="font-display text-xl font-semibold mb-1">Morning Batch</h3>
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:20px;">6:00 AM – 10:00 AM · Mon–Sat</p>
+        <div class="flex items-end gap-2 mb-6">
+          <span class="batch-price">₹799</span>
+          <span style="color:var(--text-muted);font-size:0.8rem;margin-bottom:6px;">/month</span>
+        </div>
+        <div class="space-y-1 mb-8">
+          <div class="batch-feature"><i class="fas fa-check"></i> Study Hall Access (4 hrs/day)</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Basic Book Borrowing (2 books)</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Wi-Fi Connectivity</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Locker Facility</div>
+          <div class="batch-feature" style="color:rgba(168,155,122,0.35);"><i class="fas fa-times" style="color:rgba(168,155,122,0.3);"></i> Mock Tests</div>
+          <div class="batch-feature" style="color:rgba(168,155,122,0.35);"><i class="fas fa-times" style="color:rgba(168,155,122,0.3);"></i> Mentor Sessions</div>
+        </div>
+        <button class="btn-outline w-full py-3 rounded-xl text-xs" onclick="showToast('Morning Batch selected! Proceed to Payment.')">Enrol Now</button>
+      </div>
+      <!-- Popular -->
+      <div class="glass batch-card" style="border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.06);position:relative;">
+        <div style="position:absolute;top:-1px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:20px 20px 0 0;"></div>
+        <span class="batch-badge popular">Most Popular</span>
+        <h3 class="font-display text-xl font-semibold mb-1">Standard Batch</h3>
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:20px;">8:00 AM – 8:00 PM · Mon–Sat</p>
+        <div class="flex items-end gap-2 mb-6">
+          <span class="batch-price">₹1,499</span>
+          <span style="color:var(--text-muted);font-size:0.8rem;margin-bottom:6px;">/month</span>
+        </div>
+        <div class="space-y-1 mb-8">
+          <div class="batch-feature"><i class="fas fa-check"></i> Full-Day Access (12 hrs)</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Book Borrowing (5 books)</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Digital Library Access</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> 2 Mock Tests/month</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Group Mentor Session</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Current Affairs Module</div>
+        </div>
+        <button class="btn-gold w-full py-3 rounded-xl text-xs" onclick="showToast('Standard Batch selected! Proceed to Payment.')">Enrol Now</button>
+      </div>
+      <!-- Premium -->
+      <div class="glass batch-card">
+        <span class="batch-badge">Elite</span>
+        <h3 class="font-display text-xl font-semibold mb-1">Premium Batch</h3>
+        <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:20px;">5:00 AM – 12:00 AM · All Days</p>
+        <div class="flex items-end gap-2 mb-6">
+          <span class="batch-price">₹2,499</span>
+          <span style="color:var(--text-muted);font-size:0.8rem;margin-bottom:6px;">/month</span>
+        </div>
+        <div class="space-y-1 mb-8">
+          <div class="batch-feature"><i class="fas fa-check"></i> 19-Hour Access + Sundays</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Unlimited Book Borrowing</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Full Digital Access</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Unlimited Mock Tests</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> 1-on-1 Mentor Sessions</div>
+          <div class="batch-feature"><i class="fas fa-check"></i> Priority Seat Reservation</div>
+        </div>
+        <button class="btn-outline w-full py-3 rounded-xl text-xs" onclick="showToast('Premium Batch selected! Proceed to Payment.')">Enrol Now</button>
+      </div>
+    </div>
+    <!-- Annual offer -->
+    <div class="glass-flat mt-8 p-6 flex flex-col md:flex-row items-center justify-between gap-4" style="border-radius:20px;">
+      <div class="flex items-center gap-4">
+        <div style="width:48px;height:48px;border-radius:14px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;">
+          <i class="fas fa-tag"></i>
+        </div>
+        <div>
+          <div class="font-display text-sm font-semibold" style="letter-spacing:0.05em;">Annual Membership Offer</div>
+          <div style="font-size:0.83rem;color:var(--text-muted);margin-top:3px;">Pay for 10 months and avail 2 months absolutely complimentary — a saving of up to ₹4,998.</div>
+        </div>
+      </div>
+      <button class="btn-gold px-6 py-3 rounded-xl text-xs whitespace-nowrap" onclick="showToast('Annual plan offer applied! Check Payment section.')">Claim Offer</button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  PAYMENT
+══════════════════════════════════════════ -->
+<section id="payment" class="section-pad" style="background:rgba(255,255,255,0.01);">
+  <div class="max-w">
+    <div class="text-center mb-16">
+      <p class="section-label mb-3">Secure Gateway</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        Membership <span class="gold-text">Payment</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);">
+        Seamless, secure transactions with multiple payment options for your convenience.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-5 gap-8">
+      <!-- Form -->
+      <div class="md:col-span-3">
+        <div class="glass-flat p-8" style="border-radius:24px;">
+          <h3 class="font-display text-lg font-semibold mb-6" style="letter-spacing:0.05em;">Enrolment Details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label">Full Name</label>
+              <input class="form-input" type="text" placeholder="As per official documents" id="pay-name"/>
+            </div>
+            <div>
+              <label class="form-label">Mobile Number</label>
+              <input class="form-input" type="tel" placeholder="+91 XXXXX XXXXX" id="pay-phone"/>
+            </div>
+            <div>
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" placeholder="your@email.com" id="pay-email"/>
+            </div>
+            <div>
+              <label class="form-label">Select Batch</label>
+              <select class="form-input" id="pay-batch" style="appearance:none;cursor:pointer;">
+                <option value="" style="background:#0D1530;">— Choose Batch —</option>
+                <option value="morning" style="background:#0D1530;">Morning Batch — ₹799/mo</option>
+                <option value="standard" style="background:#0D1530;">Standard Batch — ₹1,499/mo</option>
+                <option value="premium" style="background:#0D1530;">Premium Batch — ₹2,499/mo</option>
+                <option value="annual-standard" style="background:#0D1530;">Annual Standard — ₹14,990</option>
+                <option value="annual-premium" style="background:#0D1530;">Annual Premium — ₹24,990</option>
+              </select>
+            </div>
+          </div>
+          <label class="form-label mb-3 block">Payment Method</label>
+          <div class="glass-flat mb-5" style="border-radius:16px;overflow:hidden;">
+            <div class="payment-method" onclick="selectPayment('upi')">
+              <div class="payment-radio" id="radio-upi"></div>
+              <i class="fas fa-mobile-alt" style="color:var(--gold);width:20px;text-align:center;"></i>
+              <div>
+                <div class="text-sm font-medium">UPI Payment</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">Google Pay, PhonePe, Paytm, BHIM</div>
+              </div>
+            </div>
+            <div style="height:1px;background:rgba(201,168,76,0.1);"></div>
+            <div class="payment-method" onclick="selectPayment('card')">
+              <div class="payment-radio" id="radio-card"></div>
+              <i class="fas fa-credit-card" style="color:var(--gold);width:20px;text-align:center;"></i>
+              <div>
+                <div class="text-sm font-medium">Credit / Debit Card</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">Visa, Mastercard, RuPay</div>
+              </div>
+            </div>
+            <div style="height:1px;background:rgba(201,168,76,0.1);"></div>
+            <div class="payment-method" onclick="selectPayment('netbanking')">
+              <div class="payment-radio" id="radio-netbanking"></div>
+              <i class="fas fa-university" style="color:var(--gold);width:20px;text-align:center;"></i>
+              <div>
+                <div class="text-sm font-medium">Net Banking</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">SBI, HDFC, ICICI, Axis & all major banks</div>
+              </div>
+            </div>
+            <div style="height:1px;background:rgba(201,168,76,0.1);"></div>
+            <div class="payment-method" onclick="selectPayment('cash')">
+              <div class="payment-radio" id="radio-cash"></div>
+              <i class="fas fa-money-bill-wave" style="color:var(--gold);width:20px;text-align:center;"></i>
+              <div>
+                <div class="text-sm font-medium">Pay at Counter</div>
+                <div style="font-size:0.75rem;color:var(--text-muted);">Cash or cheque at library desk</div>
+              </div>
+            </div>
+          </div>
+          <!-- UPI ID section -->
+          <div id="upi-section" style="display:none;" class="mb-5">
+            <label class="form-label">UPI ID</label>
+            <input class="form-input" type="text" placeholder="yourname@paytm"/>
+            <div class="mt-3 p-4 glass-flat" style="border-radius:12px;text-align:center;">
+              <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;font-family:'Cinzel',serif;letter-spacing:0.1em;">SCAN TO PAY</div>
+              <div style="width:100px;height:100px;background:rgba(255,255,255,0.08);border-radius:12px;margin:0 auto;display:flex;align-items:center;justify-content:center;border:1px solid rgba(201,168,76,0.2);">
+                <i class="fas fa-qrcode" style="font-size:3rem;color:rgba(201,168,76,0.4);"></i>
+              </div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">budhalibrary@upi</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+            <i class="fas fa-lock" style="color:var(--gold);font-size:0.8rem;"></i>
+            <span style="font-size:0.78rem;color:var(--text-muted);">256-bit SSL encrypted · Your data is fully secure</span>
+          </div>
+          <button class="btn-gold w-full py-4 rounded-xl text-sm" onclick="processPayment()">
+            <i class="fas fa-arrow-right" style="margin-right:8px;"></i>Proceed to Pay
+          </button>
+        </div>
+      </div>
+      <!-- Summary -->
+      <div class="md:col-span-2">
+        <div class="glass-flat p-6" style="border-radius:24px;margin-bottom:20px;">
+          <h3 class="font-display text-sm font-semibold mb-5" style="letter-spacing:0.08em;color:var(--gold);">ORDER SUMMARY</h3>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.1);font-size:0.88rem;">
+            <span style="color:var(--text-muted);">Selected Plan</span>
+            <span id="summary-plan" class="font-medium">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.1);font-size:0.88rem;">
+            <span style="color:var(--text-muted);">Duration</span>
+            <span>1 Month</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(201,168,76,0.1);font-size:0.88rem;">
+            <span style="color:var(--text-muted);">Registration Fee</span>
+            <span style="color:rgba(99,212,99,0.9);">Waived</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:14px 0;font-size:1rem;">
+            <span class="font-semibold">Total Payable</span>
+            <span id="summary-total" class="font-display font-bold" style="color:var(--gold);">₹0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:65%;"></div></div>
+          <div style="font-size:0.72rem;color:var(--text-muted);">65% of this month's seats filled</div>
+        </div>
+        <div class="glass-flat p-6" style="border-radius:24px;">
+          <h3 class="font-display text-sm font-semibold mb-4" style="letter-spacing:0.08em;color:var(--gold);">MEMBERSHIP BENEFITS</h3>
+          <div class="space-y-3">
+            <div class="flex gap-3" style="font-size:0.83rem;">
+              <i class="fas fa-check-circle" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+              <span style="color:rgba(240,234,214,0.8);">Instant digital membership card issued</span>
+            </div>
+            <div class="flex gap-3" style="font-size:0.83rem;">
+              <i class="fas fa-check-circle" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+              <span style="color:rgba(240,234,214,0.8);">Access begins same working day</span>
+            </div>
+            <div class="flex gap-3" style="font-size:0.83rem;">
+              <i class="fas fa-check-circle" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+              <span style="color:rgba(240,234,214,0.8);">Auto-renewal reminders 7 days prior</span>
+            </div>
+            <div class="flex gap-3" style="font-size:0.83rem;">
+              <i class="fas fa-check-circle" style="color:var(--gold);margin-top:2px;flex-shrink:0;"></i>
+              <span style="color:rgba(240,234,214,0.8);">Hassle-free cancellation policy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  CATALOG
+══════════════════════════════════════════ -->
+<section id="catalog" class="section-pad">
+  <div class="max-w">
+    <div class="text-center mb-12">
+      <p class="section-label mb-3">Reading Collection</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        Book <span class="gold-text">Catalog</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);max-width:500px;margin:0 auto 28px;">
+        Over 12,000 meticulously curated titles spanning academic disciplines and literary genres.
+      </p>
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-3 justify-center">
+        <button class="filter-btn active" onclick="filterBooks(this,'all')">All Collections</button>
+        <button class="filter-btn" onclick="filterBooks(this,'upsc')">UPSC / BPSC</button>
+        <button class="filter-btn" onclick="filterBooks(this,'science')">Science</button>
+        <button class="filter-btn" onclick="filterBooks(this,'literature')">Literature</button>
+        <button class="filter-btn" onclick="filterBooks(this,'management')">Management</button>
+        <button class="filter-btn" onclick="filterBooks(this,'history')">History</button>
+      </div>
+    </div>
+    <div id="book-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
+      <!-- Books generated by JS -->
+    </div>
+    <div class="text-center mt-10">
+      <button class="btn-outline px-8 py-4 rounded-2xl text-sm" onclick="showToast('Full catalog available to members. Enrol to access.')">
+        <i class="fas fa-search" style="margin-right:8px;"></i>Browse Full Catalog
+      </button>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  EVENTS
+══════════════════════════════════════════ -->
+<section id="events" class="section-pad" style="background:rgba(255,255,255,0.01);">
+  <div class="max-w">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
+      <div>
+        <p class="section-label mb-3">Coming Up</p>
+        <h2 class="font-display text-4xl md:text-5xl font-semibold">
+          Upcoming <span class="gold-text">Events</span>
+        </h2>
+      </div>
+      <button class="btn-outline px-6 py-3 rounded-xl text-xs" onclick="showToast('Full events calendar coming soon!')">View All Events</button>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="glass event-card">
+        <div class="event-date-box">
+          <div class="event-day">22</div>
+          <div class="event-month">MAR</div>
+        </div>
+        <div class="flex-1">
+          <span style="font-size:0.68rem;font-family:'Cinzel',serif;letter-spacing:0.15em;color:var(--gold);background:rgba(201,168,76,0.1);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);">SEMINAR</span>
+          <h3 class="font-display text-lg font-semibold mt-3 mb-2" style="letter-spacing:0.03em;">UPSC Prelims Strategy Masterclass</h3>
+          <p style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">A comprehensive session led by IAS officers sharing their proven preparation methodologies and answer-writing techniques for the Civil Services Examination.</p>
+          <div class="flex gap-4" style="font-size:0.78rem;color:var(--text-muted);">
+            <span><i class="far fa-clock" style="margin-right:5px;color:var(--gold);"></i>10:00 AM – 1:00 PM</span>
+            <span><i class="fas fa-map-marker-alt" style="margin-right:5px;color:var(--gold);"></i>Main Hall</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass event-card">
+        <div class="event-date-box">
+          <div class="event-day">28</div>
+          <div class="event-month">MAR</div>
+        </div>
+        <div class="flex-1">
+          <span style="font-size:0.68rem;font-family:'Cinzel',serif;letter-spacing:0.15em;color:var(--gold);background:rgba(201,168,76,0.1);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);">MOCK TEST</span>
+          <h3 class="font-display text-lg font-semibold mt-3 mb-2" style="letter-spacing:0.03em;">BPSC Full-Length Mock Examination</h3>
+          <p style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">A fully simulated BPSC examination with OMR-based answering, followed by a detailed solutions discussion and individual performance analysis report.</p>
+          <div class="flex gap-4" style="font-size:0.78rem;color:var(--text-muted);">
+            <span><i class="far fa-clock" style="margin-right:5px;color:var(--gold);"></i>9:00 AM – 12:00 PM</span>
+            <span><i class="fas fa-map-marker-alt" style="margin-right:5px;color:var(--gold);"></i>Exam Centre</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass event-card">
+        <div class="event-date-box">
+          <div class="event-day">05</div>
+          <div class="event-month">APR</div>
+        </div>
+        <div class="flex-1">
+          <span style="font-size:0.68rem;font-family:'Cinzel',serif;letter-spacing:0.15em;color:var(--gold);background:rgba(201,168,76,0.1);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);">WORKSHOP</span>
+          <h3 class="font-display text-lg font-semibold mt-3 mb-2" style="letter-spacing:0.03em;">Speed Reading & Comprehension Workshop</h3>
+          <p style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">Develop advanced reading techniques to significantly enhance comprehension speed and retention — an essential skill for all competitive examinations.</p>
+          <div class="flex gap-4" style="font-size:0.78rem;color:var(--text-muted);">
+            <span><i class="far fa-clock" style="margin-right:5px;color:var(--gold);"></i>3:00 PM – 5:30 PM</span>
+            <span><i class="fas fa-map-marker-alt" style="margin-right:5px;color:var(--gold);"></i>Workshop Room</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass event-card">
+        <div class="event-date-box">
+          <div class="event-day">12</div>
+          <div class="event-month">APR</div>
+        </div>
+        <div class="flex-1">
+          <span style="font-size:0.68rem;font-family:'Cinzel',serif;letter-spacing:0.15em;color:var(--gold);background:rgba(201,168,76,0.1);padding:3px 10px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);">AWARD CEREMONY</span>
+          <h3 class="font-display text-lg font-semibold mt-3 mb-2" style="letter-spacing:0.03em;">Annual Academic Excellence Awards</h3>
+          <p style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">Celebrating the outstanding achievements of our members who have excelled in competitive examinations, academic pursuits, and community contributions.</p>
+          <div class="flex gap-4" style="font-size:0.78rem;color:var(--text-muted);">
+            <span><i class="far fa-clock" style="margin-right:5px;color:var(--gold);"></i>6:00 PM – 9:00 PM</span>
+            <span><i class="fas fa-map-marker-alt" style="margin-right:5px;color:var(--gold);"></i>Auditorium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  TESTIMONIALS
+══════════════════════════════════════════ -->
+<section id="testimonials" class="section-pad">
+  <div class="max-w">
+    <div class="text-center mb-16">
+      <p class="section-label mb-3">Member Voices</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        What Our <span class="gold-text">Members Say</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);">
+        The measure of our success is the success of those we serve.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="star-row"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testimonial-text">Budha Library's structured environment and the guidance of their mentors were instrumental in my selection to the Bihar Administrative Services. The discipline cultivated here is unparalleled.</p>
+        <div class="flex items-center gap-3">
+          <div class="avatar">AK</div>
+          <div>
+            <div class="font-semibold text-sm">Anand Kumar</div>
+            <div style="font-size:0.78rem;color:var(--gold);margin-top:2px;">BAS Officer, 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass testimonial-card" style="border-color:rgba(201,168,76,0.4);">
+        <div class="quote-mark">"</div>
+        <div class="star-row"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p class="testimonial-text">From the quality of study materials to the serenity of the study halls — everything about Budha Library speaks of excellence. I cleared SSC CGL in my very first attempt, and I attribute this success to this institution.</p>
+        <div class="flex items-center gap-3">
+          <div class="avatar">PS</div>
+          <div>
+            <div class="font-semibold text-sm">Priya Sinha</div>
+            <div style="font-size:0.78rem;color:var(--gold);margin-top:2px;">SSC CGL Qualifier, 2024</div>
+          </div>
+        </div>
+      </div>
+      <div class="glass testimonial-card">
+        <div class="quote-mark">"</div>
+        <div class="star-row"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+        <p class="testimonial-text">The digital resources, mock test series, and the personal mentoring I received at Budha Library gave me the competitive edge I needed. The value offered at this fee structure is extraordinary.</p>
+        <div class="flex items-center gap-3">
+          <div class="avatar">RM</div>
+          <div>
+            <div class="font-semibold text-sm">Rahul Mishra</div>
+            <div style="font-size:0.78rem;color:var(--gold);margin-top:2px;">Banking Professional, IBPS PO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Success Banner -->
+    <div class="glass-flat mt-10 p-8 text-center" style="border-radius:24px;background:rgba(201,168,76,0.04);">
+      <p class="section-label mb-3">Our Track Record</p>
+      <h3 class="font-display text-3xl font-semibold mb-6">
+        <span class="gold-text">1,200+</span> Successful Selections in 2024
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div>
+          <div class="font-display text-2xl gold-text font-bold">142</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">UPSC / BPSC</div>
+        </div>
+        <div>
+          <div class="font-display text-2xl gold-text font-bold">389</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">Banking & Insurance</div>
+        </div>
+        <div>
+          <div class="font-display text-2xl gold-text font-bold">417</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">SSC & Railways</div>
+        </div>
+        <div>
+          <div class="font-display text-2xl gold-text font-bold">264</div>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:4px;">State & Defence</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  CONTACT
+══════════════════════════════════════════ -->
+<section id="contact" class="section-pad" style="background:rgba(255,255,255,0.01);">
+  <div class="max-w">
+    <div class="text-center mb-16">
+      <p class="section-label mb-3">Get in Touch</p>
+      <h2 class="font-display text-4xl md:text-5xl font-semibold mb-4">
+        Contact <span class="gold-text">Us</span>
+      </h2>
+      <p class="font-serif text-xl italic" style="color:var(--text-muted);">
+        Our team is available to assist you with any enquiries, weekdays and weekends.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-5 gap-8">
+      <div class="md:col-span-2 space-y-5">
+        <div class="glass-flat p-6" style="border-radius:20px;">
+          <h3 class="font-display text-sm font-semibold mb-4" style="letter-spacing:0.1em;color:var(--gold);">REACH US</h3>
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="text-sm font-semibold mb-1">Library Address</div>
+              <div style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;">Naika ganv(Old GT Road) Near Kumar Cinema Hall ,<br/>Sasaram, Bihar — 821115 </div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <div class="text-sm font-semibold mb-1">Phone</div>
+              <div style="font-size:0.83rem;color:var(--text-muted);">+91 97082 16884<br/>+91 0612 - 234 5678</div>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="text-sm font-semibold mb-1">Email</div>
+              <div style="font-size:0.83rem;color:var(--text-muted);">info@budhalibrary.in<br/>admissions@budhalibrary.in</div>
+            </div>
+          </div>
+          <div class="contact-info-item" style="border:none;">
+            <div class="contact-icon"><i class="far fa-clock"></i></div>
+            <div>
+              <div class="text-sm font-semibold mb-1">Library Hours</div>
+              <div style="font-size:0.83rem;color:var(--text-muted);">Mon–Sat: 5:00 AM – 12:00 AM<br/>Sunday: 7:00 AM – 9:00 PM</div>
+            </div>
+          </div>
+        </div>
+        <!-- Map -->
+        <div class="map-placeholder">
+          <i class="fas fa-map-marked-alt" style="font-size:2.5rem;color:rgba(201,168,76,0.3);position:relative;z-index:1;"></i>
+          <div style="position:relative;z-index:1;">Gandhi Maidan, Patna</div>
+          <div style="font-size:0.72rem;position:relative;z-index:1;color:rgba(168,155,122,0.5);">Interactive map available on-site</div>
+        </div>
+      </div>
+      <!-- Contact Form -->
+      <div class="md:col-span-3">
+        <div class="glass-flat p-8" style="border-radius:24px;">
+          <h3 class="font-display text-lg font-semibold mb-6" style="letter-spacing:0.05em;">Send an Enquiry</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" placeholder="Full Name" id="c-name"/>
+            </div>
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input class="form-input" type="tel" placeholder="+91 XXXXX XXXXX" id="c-phone"/>
+            </div>
+            <div class="md:col-span-2">
+              <label class="form-label">Email Address</label>
+              <input class="form-input" type="email" placeholder="your@email.com" id="c-email"/>
+            </div>
+            <div class="md:col-span-2">
+              <label class="form-label">Subject</label>
+              <select class="form-input" style="appearance:none;cursor:pointer;" id="c-subject">
+                <option value="" style="background:#0D1530;">— Select a subject —</option>
+                <option style="background:#0D1530;">Batch Enrolment Enquiry</option>
+                <option style="background:#0D1530;">Membership Renewal</option>
+                <option style="background:#0D1530;">Book Reservation Request</option>
+                <option style="background:#0D1530;">Event Registration</option>
+                <option style="background:#0D1530;">Fee & Payment Query</option>
+                <option style="background:#0D1530;">General Enquiry</option>
+              </select>
+            </div>
+            <div class="md:col-span-2">
+              <label class="form-label">Your Message</label>
+              <textarea class="form-input" rows="5" placeholder="Describe your query in detail and our team will respond within 24 working hours..." id="c-msg" style="resize:vertical;"></textarea>
+            </div>
+          </div>
+          <button class="btn-gold w-full py-4 rounded-xl text-sm" onclick="sendMessage()">
+            <i class="fas fa-paper-plane" style="margin-right:8px;"></i>Send Message
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ══════════════════════════════════════════
+  FOOTER
+══════════════════════════════════════════ -->
+<footer>
+  <div class="max-w">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-3 mb-5">
+          <div style="width:40px;height:40px;background:linear-gradient(135deg,#C9A84C,#7A5E1E);border-radius:12px;display:flex;align-items:center;justify-content:center;">
+            <i class="fas fa-book-open" style="color:#0A0F1E;font-size:1rem;"></i>
+          </div>
+          <span class="font-display text-base tracking-widest gold-text font-semibold">BUDHA LIBRARY</span>
+        </div>
+        <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;max-width:340px;margin-bottom:20px;">
+          Bihar's most trusted academic institution since 2023. Empowering learners with knowledge, mentorship, and the infrastructure to achieve their highest aspirations.
+        </p>
+        <div class="flex gap-3">
+          <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-telegram-plane"></i></a>
+          <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="font-display text-xs tracking-widest mb-4" style="color:var(--gold);letter-spacing:0.15em;">QUICK LINKS</div>
+        <a href="#about"        class="footer-link">About Us</a>
+        <a href="#services"     class="footer-link">Our Services</a>
+        <a href="#batches"      class="footer-link">Batch Plans</a>
+        <a href="#payment"      class="footer-link">Online Payment</a>
+        <a href="#events"       class="footer-link">Events & Seminars</a>
+        <a href="#contact"      class="footer-link">Contact Us</a>
+      </div>
+      <div>
+        <div class="font-display text-xs tracking-widest mb-4" style="color:var(--gold);letter-spacing:0.15em;">RESOURCES</div>
+        <a href="#" class="footer-link" onclick="showToast('Member portal login coming soon!')">Member Portal</a>
+        <a href="#" class="footer-link" onclick="showToast('Downloadable app launching Q2 2025!')">Download App</a>
+        <a href="#catalog" class="footer-link">Book Catalog</a>
+        <a href="#" class="footer-link" onclick="showToast('E-library access for members!')">E-Library</a>
+        <a href="#" class="footer-link" onclick="showToast('Referral programme details at counter!')">Refer a Friend</a>
+        <a href="#" class="footer-link">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="gold-divider"></div>
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-6">
+      <p style="font-size:0.78rem;color:var(--text-muted);">© 2025 Budha Library. All Rights Reserved. | Sasaram , Bihar, India</p>
+      <div class="flex gap-4" style="font-size:0.75rem;color:rgba(168,155,122,0.5);">
+        <a href="#" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='inherit'">Terms of Service</a>
+        <span>·</span>
+        <a href="#" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='inherit'">Privacy Policy</a>
+        <span>·</span>
+        <a href="#" style="color:inherit;text-decoration:none;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='inherit'">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+ 
+<!-- ══════════════════════════════════════════
+  JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+// ── NAVBAR SCROLL ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+ 
+// ── MOBILE MENU ──
+function openMobile()  { document.getElementById('mobile-menu').classList.add('open');    document.body.style.overflow='hidden'; }
+function closeMobile() { document.getElementById('mobile-menu').classList.remove('open'); document.body.style.overflow=''; }
+ 
+// ── TOAST ──
+let toastTimer;
+function showToast(msg) {
+  clearTimeout(toastTimer);
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast').classList.add('show');
+  toastTimer = setTimeout(() => document.getElementById('toast').classList.remove('show'), 3500);
+}
+ 
+// ── PAYMENT ──
+let selectedPayment = '';
+const prices = { morning: 799, standard: 1499, premium: 2499, 'annual-standard': 14990, 'annual-premium': 24990 };
+const labels = { morning: 'Morning Batch', standard: 'Standard Batch', premium: 'Premium Batch', 'annual-standard': 'Annual Standard', 'annual-premium': 'Annual Premium' };
+ 
+function selectPayment(type) {
+  ['upi','card','netbanking','cash'].forEach(t => {
+    document.getElementById('radio-'+t).classList.remove('selected');
+  });
+  document.getElementById('radio-'+type).classList.add('selected');
+  selectedPayment = type;
+  document.getElementById('upi-section').style.display = (type === 'upi') ? 'block' : 'none';
+}
+ 
+document.getElementById('pay-batch').addEventListener('change', function() {
+  const v = this.value;
+  if (v && prices[v]) {
+    document.getElementById('summary-plan').textContent  = labels[v];
+    document.getElementById('summary-total').textContent = '₹' + prices[v].toLocaleString('en-IN');
+  } else {
+    document.getElementById('summary-plan').textContent  = '—';
+    document.getElementById('summary-total').textContent = '₹0';
+  }
+});
+ 
+function processPayment() {
+  const name  = document.getElementById('pay-name').value.trim();
+  const phone = document.getElementById('pay-phone').value.trim();
+  const email = document.getElementById('pay-email').value.trim();
+  const batch = document.getElementById('pay-batch').value;
+  if (!name)  { showToast('Please enter your full name.'); return; }
+  if (!phone) { showToast('Please enter your mobile number.'); return; }
+  if (!email) { showToast('Please enter your email address.'); return; }
+  if (!batch) { showToast('Please select a batch plan.'); return; }
+  if (!selectedPayment) { showToast('Please select a payment method.'); return; }
+  showToast('✓ Payment initiated! You will receive a confirmation shortly.');
+}
+ 
+// ── CONTACT ──
+function sendMessage() {
+  const name    = document.getElementById('c-name').value.trim();
+  const email   = document.getElementById('c-email').value.trim();
+  const subject = document.getElementById('c-subject').value;
+  const msg     = document.getElementById('c-msg').value.trim();
+  if (!name)    { showToast('Please enter your name.'); return; }
+  if (!email)   { showToast('Please enter a valid email address.'); return; }
+  if (!subject) { showToast('Please select a subject.'); return; }
+  if (!msg)     { showToast('Please enter your message.'); return; }
+  showToast('✓ Message sent! Our team will respond within 24 hours.');
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-phone').value = '';
+  document.getElementById('c-subject').value = '';
+  document.getElementById('c-msg').value = '';
+}
+ 
+// ── CATALOG BOOKS ──
+const books = [
+  { title: 'India Polity', author: 'M. Laxmikanth', genre: 'upsc', color: ['#1A2A4E','#2A1A3E'] },
+  { title: 'Modern History', author: 'Bipin Chandra', genre: 'history', color: ['#2A1A1A','#3E1A2A'] },
+  { title: 'NCERT Geography', author: 'Class XII', genre: 'science', color: ['#1A2A1E','#1A3A2A'] },
+  { title: 'Wings of Fire', author: 'APJ Abdul Kalam', genre: 'literature', color: ['#2A2A1A','#3E3A1A'] },
+  { title: 'Economics Survey', author: 'Govt. of India', genre: 'upsc', color: ['#1E1A2A','#2A1A3E'] },
+  { title: 'Management Concepts', author: 'P. Kotler', genre: 'management', color: ['#2A1A2A','#1A1A2E'] },
+  { title: 'Ancient India', author: 'R.S. Sharma', genre: 'history', color: ['#2A1E1A','#3A2A1A'] },
+  { title: 'Organic Chemistry', author: 'Morrison Boyd', genre: 'science', color: ['#1A2A2A','#1A3E3A'] },
+  { title: 'The Discovery of India', author: 'J. Nehru', genre: 'literature', color: ['#1E2A2A','#2A3A3A'] },
+  { title: 'Indian Economy', author: 'Ramesh Singh', genre: 'upsc', color: ['#1A1E2A','#1E2A3A'] },
+  { title: 'Strategic Management', author: 'H. Mintzberg', genre: 'management', color: ['#2A1A1E','#3A1A2E'] },
+  { title: 'Medieval India', author: 'Satish Chandra', genre: 'history', color: ['#2A1A14','#3A1E14'] },
+];
+ 
+function renderBooks(filter) {
+  const grid = document.getElementById('book-grid');
+  const filtered = filter === 'all' ? books : books.filter(b => b.genre === filter);
+  grid.innerHTML = '';
+  filtered.forEach(book => {
+    const div = document.createElement('div');
+    div.className = 'glass book-card';
+    div.innerHTML = `
+      <div class="book-cover">
+        <div class="book-spine"></div>
+        <div class="book-cover-inner">
+          <span class="book-genre">${book.genre.toUpperCase()}</span>
+          <div style="font-size:0.72rem;font-weight:600;line-height:1.3;color:rgba(240,234,214,0.9);text-align:center;">${book.title}</div>
+          <div style="font-size:0.62rem;color:rgba(168,155,122,0.7);">${book.author}</div>
+        </div>
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,${book.color[0]},${book.color[1]});z-index:-1;border-radius:12px;"></div>
+      </div>
+      <h4 style="font-size:0.78rem;font-weight:600;line-height:1.3;margin-bottom:4px;font-family:'Cinzel',serif;">${book.title}</h4>
+      <p style="font-size:0.7rem;color:var(--text-muted);">${book.author}</p>
+      <button style="margin-top:8px;font-size:0.65rem;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;font-family:'Cinzel',serif;letter-spacing:0.05em;" onclick="showToast('${book.title} reserved for you!')">Reserve →</button>
+    `;
+    grid.appendChild(div);
+  });
+}
+ 
+function filterBooks(btn, cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderBooks(cat);
+}
+ 
+renderBooks('all');
+ 
+// ── INTERSECTION OBSERVER for scroll animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+ 
+document.querySelectorAll('.glass, .glass-flat').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(30px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
